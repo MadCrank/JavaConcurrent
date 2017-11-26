@@ -6,6 +6,8 @@ import java.util.List;
 import ru.naumen.counter.impls.AtomicCounter;
 import ru.naumen.counter.impls.RWLockCounter;
 import ru.naumen.counter.impls.ReentrantLockCounter;
+import ru.naumen.counter.impls.ReentrantLockCounterWithTryLock;
+import ru.naumen.counter.impls.StampedLockCounter;
 import ru.naumen.counter.impls.SynchronizedCounter;
 import ru.naumen.counter.impls.UnsafeCounter;
 
@@ -22,7 +24,8 @@ public class CounterExample
     public static void main(String[] args)
     {
         List<Counter> counters = Arrays.asList(new UnsafeCounter(), new SynchronizedCounter(), new AtomicCounter(),
-                new RWLockCounter(false), new ReentrantLockCounter(false));
+                new RWLockCounter(false), new ReentrantLockCounter(false), new ReentrantLockCounterWithTryLock(false),
+                new StampedLockCounter());
 
         ExperimentRunner runner = new ExperimentRunner(4, 5, 100_000_000);
 

@@ -9,7 +9,7 @@ import ru.naumen.counter.Counter;
  */
 public class SynchronizedCounter implements Counter
 {
-    private volatile int counter = 0;
+    private int counter = 0;
 
     @Override
     public synchronized int get()

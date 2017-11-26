@@ -5,16 +5,16 @@ import java.util.concurrent.locks.ReentrantLock;
 import ru.naumen.counter.Counter;
 
 /**
- * Счетчик вызовов на ReentrantLock
+ * Счетчик вызовов на ReentrantLock c tryLock
  * @author pzykov
  * @since 19 нояб. 2017 г.	
  */
-public class ReentrantLockCounter implements Counter
+public class ReentrantLockCounterWithTryLock implements Counter
 {
     ReentrantLock lock;
     private int counter = 0;
 
-    public ReentrantLockCounter(boolean fair)
+    public ReentrantLockCounterWithTryLock(boolean fair)
     {
         lock = new ReentrantLock(fair);
     }
@@ -22,7 +22,11 @@ public class ReentrantLockCounter implements Counter
     @Override
     public int get()
     {
-        lock.lock();
+        boolean locked = false;
+        while (!locked)
+        {
+            locked = lock.tryLock();
+        }
         int value = counter;
         lock.unlock();
         return value;

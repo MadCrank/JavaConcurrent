@@ -30,5 +30,4 @@ public class AtomicCounter implements Counter
     {
         counter.set(0);
     }
-
 }

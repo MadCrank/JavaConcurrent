@@ -12,7 +12,7 @@ import ru.naumen.counter.Counter;
 public class RWLockCounter implements Counter
 {
     ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
-    private volatile int counter = 0;
+    private int counter = 0;
 
     public RWLockCounter(boolean fair)
     {
@@ -23,42 +23,24 @@ public class RWLockCounter implements Counter
     public int get()
     {
         lock.readLock().lock();
-        try
-        {
-            return counter++;
-        }
-        finally
-        {
-            lock.readLock().unlock();
-        }
+        int value = counter;
+        lock.readLock().unlock();
+        return value;
     }
 
     @Override
     public void increment()
     {
         lock.writeLock().lock();
-        try
-        {
-            counter++;
-        }
-        finally
-        {
-            lock.writeLock().unlock();
-        }
+        counter++;
+        lock.writeLock().unlock();
     }
 
     @Override
     public void reset()
     {
         lock.writeLock().lock();
-        try
-        {
-            counter = 0;
-        }
-        finally
-        {
-            lock.writeLock().unlock();
-        }
+        counter = 0;
+        lock.writeLock().unlock();
     }
-
 }
