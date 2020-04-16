@@ -29,7 +29,7 @@ public class CounterExample
 
         ExperimentRunner runner = new ExperimentRunner(4, 5, 100_000_000);
 
-        counters.forEach(c -> runner.runExperiments(c));
+        counters.forEach(runner::runExperiments);
     }
 
 }

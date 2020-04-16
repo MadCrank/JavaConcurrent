@@ -65,7 +65,7 @@ public class ExperimentRunner
         List<Thread> threads = Stream.generate(() -> new Thread(experiment)).limit(threadsNumber)
                 .collect(Collectors.toList());
 
-        threads.forEach(t -> t.start());
+        threads.forEach(Thread::start);
         threads.forEach(t -> {
             try
             {
